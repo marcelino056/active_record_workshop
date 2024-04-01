@@ -1,0 +1,26 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: active_record_workshop_development
+  username: active_record_workshop
+  password: 123456789
+  host: localhost
+  port: 5432
+
+test:
+  <<: *default
+  database: active_record_workshop_test
+  username: active_record_workshop
+  password: 123456789
+  host: localhost
+  port: 5432
+  
+production:
+  <<: *default
+  database: active_record_workshop_production
+  username: active_record_workshop
+  password: <%= ENV["ACTIVE_RECORD_WORKSHOP_DATABASE_PASSWORD"] %>
