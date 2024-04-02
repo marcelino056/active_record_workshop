@@ -1,26 +1,20 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  username: <%= ENV.fetch("DATABASE_USERNAME") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") %>
+  host: <%= ENV.fetch("DATABASE_HOST") { 'localhost' } %>
+  port: <%= ENV.fetch("DATABASE_PORT") { 5432 } %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
   database: active_record_workshop_development
-  username: active_record_workshop
-  password: 123456789
-  host: localhost
-  port: 5432
 
 test:
   <<: *default
   database: active_record_workshop_test
-  username: active_record_workshop
-  password: 123456789
-  host: localhost
-  port: 5432
   
 production:
   <<: *default
   database: active_record_workshop_production
-  username: active_record_workshop
-  password: <%= ENV["ACTIVE_RECORD_WORKSHOP_DATABASE_PASSWORD"] %>
