@@ -119,7 +119,7 @@ Objetivo del taller: Introducir a los participantes en el uso de Active Record, 
   - No se recomienda utilizar SQLite para ambientes de produccion.
 ## Modelos
 ### 1. Que es un modelo
-Un modelo en Active Record es una clase de Ruby que representa una tabla en la base de datos. Los modelos en Active Record contienen lógica de negocio y métodos para interactuar con los datos en la base de datos.
+Active Record es el componente de Rails que proporciona una interfaz orientada a objetos para interactuar con la base de datos. Es un patrón de diseño ORM (Object-Relational Mapping) que mapea las tablas de la base de datos a clases de Ruby y las filas de esas tablas a instancias de esas clases. Esto permite a los desarrolladores trabajar con la base de datos utilizando objetos y métodos familiares en lugar de escribir consultas SQL directamente.
 
 ### 2. Crear un modelo en rails
   Utilizamos el comando rails generate model seguido del nombre del modelo y los nombres de las columnas para crear un nuevo modelo en Rails. Por ejemplo, para crear un modelo de usuario con los campos name y email, usaríamos el siguiente comando:
@@ -284,6 +284,13 @@ Active Record utiliza consultas parametrizadas para prevenir la inyección de SQ
     La diferencia principal entre eager_load y includes es cómo se realiza la carga de datos. eager_load utiliza un LEFT OUTER JOIN para cargar los registros principales y las asociaciones en una sola consulta, lo que significa que todos los registros se cargarán, incluso si algunas asociaciones no tienen datos correspondientes. Por otro lado, includes realiza dos consultas separadas: una para los registros principales y otra para las asociaciones, utilizando una estrategia conocida como "lazy loading".
     ```ruby
       users = User.eager_load(:posts).where('posts.published' => true)
+    ```
+15. Consultas personalizadas: Aunque Active Record proporciona métodos para realizar consultas de manera fácil y segura, a veces es necesario ejecutar consultas SQL personalizadas. Es importante tener cuidado al ejecutar consultas SQL personalizadas para evitar vulnerabilidades de seguridad como la inyección de SQL.
+    ```ruby
+      results = ActiveRecord::Base.connection.execute("SELECT * FROM users WHERE age > 18")
+      results.each do |row|
+        puts "Name: #{row['name']}, Age: #{row['age']}"
+      end
     ```
 
 #### 1. Consulta básica:
